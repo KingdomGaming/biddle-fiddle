@@ -1,10 +1,3 @@
-export default class Test {
-    constructor() {
-        this.stuff = "some stuff here";
-        this._log(this.stuff);
-    }
+import Test from "./other-module";
 
-    static _log(toLog) {
-        console.log(toLog);
-    }
-}
+const mine = new Test();

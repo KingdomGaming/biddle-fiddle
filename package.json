@@ -2,12 +2,12 @@
   "name": "biddle-fiddle",
   "version": "0.0.0",
   "description": "Play wit ya new biddys",
-  "main": "src/index.js",
+  "private": true,
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "build": "do buildy things",
-    "start": "webpack dev server stuff",
+    "build": "webpack",
+    "start": "webpack-dev-server",
     "test": "echo \"Error: No test specified.\" && exit 1"
   },
   "repository": {
@@ -23,10 +23,25 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-exponentiation-operator": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^0.28.11",
     "eslint": "^4.9.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.7.0",
-    "webpack": "^4.8.1"
-  }
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.8.1",
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {}
 }

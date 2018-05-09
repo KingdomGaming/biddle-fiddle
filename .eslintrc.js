@@ -8,7 +8,9 @@ module.exports = {
             "allowAfterSuper": true
         }],
         "eol-last": ["error", "never"],
-        "no-trailing-spaces": "error"
+        "no-trailing-spaces": "error",
+        "space-before-function-paren": ["error", "never"],
+        "comma-dangle": ["error", "never"]
     },
     "parser": "babel-eslint",
 }
