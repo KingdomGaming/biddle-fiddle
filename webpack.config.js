@@ -1,36 +1,43 @@
+// Project Modules
 const path = require("path");
 const webpack = require("webpack");
+const autoprefixer = require("autoprefixer");
 
 // Webpack Plugins
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+
+// Directory Constants
+const sourceDirectory = path.resolve("src");
+const buildDirectory = path.resolve("dist");
 
 
 module.exports = {
+    mode: "development",
     entry: {
-        app: "./src/index.js"
+        app: path.join(sourceDirectory, "js", "index.js")
     },
     output: {
         filename: "[name].bundle.js",
-        path: path.resolve(__dirname, "dist")
+        path: buildDirectory
     },
     module: {
         rules: [
-            {
-                test: /\.css$/,
-                use: [
-                    "style-loader",
-                    "css-loader"
-                ]
-            },
             {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
                     loader: "babel-loader",
                     options: {
-                        presets: ["env"],
+                        presets: [
+                            ["env", {
+                                targets: {
+                                    browsers: ["last 2 versions"]
+                                }
+                            }]
+                        ],
                         plugins: [
                             "transform-async-to-generator",
                             "transform-class-properties",
@@ -39,33 +46,77 @@ module.exports = {
                         ]
                     }
                 }
+            },
+            {
+                test: /\.sass$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [
+                        {
+                            loader: "css-loader",
+                            options: {
+                                importLoaders: 2,
+                                sourceMap: true
+                            }
+                        },
+                        {
+                            loader: "postcss-loader",
+                            options: {
+                                sourceMap: "inline",
+                                plugins: () => [
+                                    autoprefixer()
+                                ]
+                            }
+                        },
+                        {
+                            loader: "sass-loader",
+                            options: {
+                                sourceMap: true
+                            }
+                        }
+                    ]
+                })
             }
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(["dist"]),
+        new CleanWebpackPlugin([buildDirectory]),
+        new ExtractTextPlugin({
+            filename: "[name].css",
+            allChunks: true
+        }),
         new HtmlWebpackPlugin({
-            template: "./index.html",
+            template: path.join(sourceDirectory, "index.html"),
             inject: "body",
             minify: true,
+            cache: false,
             hash: true
         }),
-        new webpack.HotModuleReplacementPlugin(),
-        // TODO: Fix this plugin
-        // new ExtractTextPlugin({
-        //     filename: "app.min.css",
-        //     allChunks: true
-        // })
+        new UglifyJsPlugin(),
+        new webpack.HotModuleReplacementPlugin()
     ],
-    mode: "development",
     devtool: "inline-source-map",
     devServer: {
-        contentBase: "./dist",
+        contentBase: buildDirectory,
         watchContentBase: true,
         index: "index.html",
         hot: true,
         compress: true,
         historyApiFallback: true,
-        port: 1337
+        port: 1337,
+        stats: {
+            assets: true,
+            children: false,
+            chunks: false,
+            hash: false,
+            modules: false,
+            publicPath: false,
+            timings: true,
+            version: false,
+            warnings: true,
+            colors: {
+                green: "\u001b[32m"
+            }
+        }
     }
 };
