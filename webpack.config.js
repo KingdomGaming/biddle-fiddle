@@ -12,12 +12,14 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 // Directory Constants
 const sourceDirectory = path.resolve("src");
 const buildDirectory = path.resolve("dist");
+const testDirectory = path.resolve("test");
 
 
 module.exports = {
     mode: "development",
     entry: {
-        app: path.join(sourceDirectory, "js", "index.js")
+        app: path.join(sourceDirectory, "js", "index.js"),
+        "app-test": path.join(testDirectory, "js", "app-test.js")
     },
     output: {
         filename: "[name].bundle.js",
@@ -87,10 +89,21 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: path.join(sourceDirectory, "index.html"),
+            filename: "app.html",
             inject: "body",
             minify: true,
             cache: false,
-            hash: true
+            hash: true,
+            chunks: ["app"]
+        }),
+        new HtmlWebpackPlugin({
+            template: path.join(testDirectory, "app-test.html"),
+            filename: "app-test.html",
+            inject: "body",
+            minify: true,
+            cache: false,
+            hash: true,
+            chunks: ["app-test"]
         }),
         new UglifyJsPlugin(),
         new webpack.HotModuleReplacementPlugin()

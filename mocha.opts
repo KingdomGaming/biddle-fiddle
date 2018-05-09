@@ -1,0 +1,4 @@
+--ui bdd
+--colors
+--reporter nyan
+--timeout 5000
