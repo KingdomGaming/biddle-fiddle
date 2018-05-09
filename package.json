@@ -1,0 +1,32 @@
+{
+  "name": "biddle-fiddle",
+  "version": "0.0.0",
+  "description": "Play wit ya new biddys",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "build": "do buildy things",
+    "start": "webpack dev server stuff",
+    "test": "echo \"Error: No test specified.\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charleslorenzo/biddle-fiddle.git"
+  },
+  "author": "Charles Lorenzo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/charleslorenzo/biddle-fiddle/issues"
+  },
+  "homepage": "https://github.com/charleslorenzo/biddle-fiddle#readme",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "webpack": "^4.8.1"
+  }
+}
